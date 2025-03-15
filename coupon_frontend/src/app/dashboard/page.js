@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const AdminPanel = () => {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const router = useRouter();
   const [claimHistory, setClaimHistory] = useState([]);
   const [claimStats, setClaimStats] = useState([]);
@@ -36,7 +37,7 @@ const AdminPanel = () => {
   const fetchCoupons = async (token) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/admin/coupons", {
+      const response = await fetch(`${API_BASE_URL}/api/admin/coupons`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -54,7 +55,7 @@ const AdminPanel = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:5000/api/admin/coupon/delete/${id}`,
+        `${API_BASE_URL}/api/admin/coupon/delete/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -82,7 +83,7 @@ const AdminPanel = () => {
   const fetchClaimHistory = async (token) => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/admin/claims", {
+      const response = await fetch(`${API_BASE_URL}/api/admin/claims`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
@@ -103,7 +104,7 @@ const AdminPanel = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:5000/api/admin/coupon/update/${couponId}`,
+        `${API_BASE_URL}/api/admin/coupon/update/${couponId}`,
         {
           method: "PUT",
           headers: {
@@ -141,7 +142,7 @@ const AdminPanel = () => {
     try {
       setLoading(true);
       setError("");
-      const response = await fetch("http://localhost:5000/api/admin/coupon", {
+      const response = await fetch(`${API_BASE_URL}/api/admin/coupon`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +170,7 @@ const AdminPanel = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:5000/api/admin/coupon/toggle/${id}`,
+        `${API_BASE_URL}/api/admin/coupon/toggle/${id}`,
         {
           method: "PUT",
           headers: {
