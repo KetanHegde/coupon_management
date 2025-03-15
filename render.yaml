@@ -1,0 +1,13 @@
+services:
+  - name: express-backend
+    type: web
+    runtime: node
+    repo: https://github.com/your-username/your-repo
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: NODE_ENV
+        value: production
