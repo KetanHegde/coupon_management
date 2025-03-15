@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const ClaimCoupon = () => {
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
   const router = useRouter();
   const [coupon, setCoupon] = useState(null);
   const [error, setError] = useState("");
@@ -61,7 +62,7 @@ const ClaimCoupon = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/user/claim-coupon",
+        `${API_BASE_URL}/api/user/claim-coupon`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
