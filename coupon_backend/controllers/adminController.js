@@ -26,7 +26,6 @@ exports.registerAdmin = async (req, res) => {
             try {
                 const newAdmin = new Admin({ username: "admin", password: hash });
                 await newAdmin.save();
-                console.log("Admin registered successfully!");
             } catch (error) {
                 console.error("Error saving admin:", error);
             }
