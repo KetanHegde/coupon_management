@@ -2,7 +2,7 @@ services:
   - name: express-backend
     type: web
     runtime: node
-    repo: https://github.com/your-username/your-repo
+    repo: https://github.com/KetanHegde/coupon_management
     plan: free
     buildCommand: npm install
     startCommand: node server.js
