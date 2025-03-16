@@ -336,7 +336,9 @@ const AdminPanel = () => {
             <h2 className="text-xl font-bold text-gray-800">Manage Coupons</h2>
             <button
               style={{ cursor: "pointer" }}
-              onClick={() => fetchCoupons(adminToken)}
+              onClick={() =>{ fetchCoupons(adminToken);
+                fetchClaimHistory(adminToken)
+                            }}
               className="text-indigo-600 hover:text-indigo-800 flex items-center text-sm"
               disabled={loading2}
             >
