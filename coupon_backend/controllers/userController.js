@@ -2,7 +2,7 @@ const Coupon = require("../models/Coupon");
 
 exports.claimCoupon = async (req, res) => {
   const { browserId } = req.body;
-  const ipAddress = req.ip;
+  const ipAddress = req.headers["x-forwarded-for"]?.split(",")[0] || req.ip;
 
   if (req.cookies.claim_token) {
     return res
