@@ -95,7 +95,7 @@ const ClaimCoupon = () => {
         </button>
       </div>
       <div className="flex flex-col items-center justify-center min-h-[86vh]">
-        <h1 className="text-2xl font-bold mb-4">Claim Your Coupon</h1>
+        <h1 className="text-2xl font-bold mb-4 text-white">Claim Your Coupon</h1>
 
         {coupon ? (
           <div className="p-8 flex items-center justify-center">
