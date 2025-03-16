@@ -21,9 +21,7 @@ if (recentClaim) {
   const oneHourLater = new Date(recentClaim.claimed_by.claimed_at);
   oneHourLater.setHours(oneHourLater.getHours() + 1);
 
-  // Convert to IST (UTC+5:30)
-  const istOffset = 5.5 * 60 * 60 * 1000; // 5 hours 30 minutes in milliseconds
-  const istTime = new Date(oneHourLater.getTime() + istOffset);
+  const istTime = new Date(oneHourLater.getTime());
 
   return res.status(403).json({
     message: `You can only claim one coupon per hour. Come after ${istTime.toLocaleString(
@@ -40,6 +38,7 @@ if (recentClaim) {
     )}`,
   });
 }
+
 
   const coupon = await Coupon.findOne({ is_claimed: false, is_active: true });
 
