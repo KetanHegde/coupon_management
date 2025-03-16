@@ -203,9 +203,18 @@ const AdminPanel = () => {
   return (
     <div style={{ backgroundColor: "#0B192C" }} className="min-h-screen">
       {/* Top Navigation Bar */}
-      <div className="text-white shadow-md">
+      <div className="text-white shadow-md flex">
         <div className="container mx-auto py-4 px-6">
           <h1 className="text-2xl md:text-3xl font-bold">Coupon Admin Panel</h1>
+        </div>
+        <div>
+          <button
+            onClick={() => router.push("/logout")}
+            style={{ cursor: "pointer" }}
+            className="border border-white px-5 py-2 my-5 mx-5 rounded-lg bg-transparent text-white hover:bg-white hover:text-black transition"
+          >
+            Logout
+          </button>
         </div>
       </div>
 
