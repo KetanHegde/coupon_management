@@ -17,24 +17,34 @@ exports.claimCoupon = async (req, res) => {
     "claimed_by.claimed_at": { $gt: new Date(Date.now() - cooldownPeriod) },
   });
 
-  if (recentClaim) {
-    const oneHourLater = new Date(recentClaim.claimed_by.claimed_at);
-    oneHourLater.setHours(oneHourLater.getHours() + 1);
+  const recentClaim = await Coupon.findOne({
+  "claimed_by.ip_address": ipAddress,
+  "claimed_by.claimed_at": { $gt: new Date(Date.now() - cooldownPeriod) },
+});
 
-    return res.status(403).json({
-      message: `You can only claim one coupon per hour. Come after ${oneHourLater.toLocaleString(
-        "en-GB",
-        {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        }
-      )}`,
-    });
-  }
+if (recentClaim) {
+  const oneHourLater = new Date(recentClaim.claimed_by.claimed_at);
+  oneHourLater.setHours(oneHourLater.getHours() + 1);
+
+  // Convert to IST (UTC+5:30)
+  const istOffset = 5.5 * 60 * 60 * 1000; // 5 hours 30 minutes in milliseconds
+  const istTime = new Date(oneHourLater.getTime() + istOffset);
+
+  return res.status(403).json({
+    message: `You can only claim one coupon per hour. Come after ${istTime.toLocaleString(
+      "en-GB",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "Asia/Kolkata", // Ensures IST conversion
+      }
+    )}`,
+  });
+}
 
   const coupon = await Coupon.findOne({ is_claimed: false, is_active: true });
 
