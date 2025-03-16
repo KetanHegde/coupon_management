@@ -35,7 +35,6 @@ const AdminPanel = () => {
   };
 
   const fetchCoupons = async (token) => {
-    setLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/api/admin/coupons`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -45,8 +44,6 @@ const AdminPanel = () => {
       else setError(data.message || "Failed to load coupons");
     } catch (err) {
       setError("Failed to load coupons.");
-    } finally {
-      setLoading(false);
     }
   };
 
