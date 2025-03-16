@@ -187,4 +187,14 @@ exports.deleteCoupon = async (req, res) => {
       res.status(500).json({ message: "Error updating coupon", error: error.message });
     }
   };
+
+
+  exports.adminLogout = async (req, res) => {
+    try {
+      res.clearCookie("token");
+      res.json({ message: "Admin logged out successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Error during logout", error });
+    }
+  };
   
