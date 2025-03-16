@@ -17,11 +17,6 @@ exports.claimCoupon = async (req, res) => {
     "claimed_by.claimed_at": { $gt: new Date(Date.now() - cooldownPeriod) },
   });
 
-  const recentClaim = await Coupon.findOne({
-  "claimed_by.ip_address": ipAddress,
-  "claimed_by.claimed_at": { $gt: new Date(Date.now() - cooldownPeriod) },
-});
-
 if (recentClaim) {
   const oneHourLater = new Date(recentClaim.claimed_by.claimed_at);
   oneHourLater.setHours(oneHourLater.getHours() + 1);
