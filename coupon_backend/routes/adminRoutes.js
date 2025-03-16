@@ -6,6 +6,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 router.post("/register", adminController.registerAdmin);
 
 router.post("/login", adminController.adminLogin);
+router.post("/logout",authMiddleware, adminController.adminLogout);
 
 router.get("/coupons", authMiddleware, adminController.getAllCoupons);
 router.post("/coupon", authMiddleware, adminController.addCoupon);
