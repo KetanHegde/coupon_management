@@ -55,6 +55,6 @@ if (recentClaim) {
 
   await coupon.save();
 
-  res.cookie("claim_token", "claimed", { httpOnly: true, sameSite: "Strict" });
+  res.cookie("claim_token", "claimed", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "None"});
   res.json({ message: "Coupon claimed successfully!", coupon: coupon.code });
 };
