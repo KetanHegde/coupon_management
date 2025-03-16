@@ -95,8 +95,9 @@ const ClaimCoupon = () => {
         </button>
       </div>
       <div className="flex flex-col items-center justify-center min-h-[95vh]">
-        <h1 className="text-2xl font-bold mb-4 text-white">Claim Your Coupon</h1>
-
+        {!error &&
+        <h1 className="text-2xl font-bold mb-4">Claim Your Coupon</h1>
+        }
         {coupon ? (
           <div className="p-8 flex items-center justify-center">
             <div className="w-full max-w-md relative overflow-hidden">
@@ -211,7 +212,7 @@ const ClaimCoupon = () => {
           </div>
         ) : (
           <>
-            {error && <p className="text-red-500">{error}</p>}
+             {error && <p className="text-red-500 text-2xl text-center">{error}</p>}
             <button
               onClick={claimCoupon}
               disabled={loading}
