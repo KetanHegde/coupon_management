@@ -10,7 +10,8 @@ const AdminPanel = () => {
   const [coupons, setCoupons] = useState([]);
   const [newCoupon, setNewCoupon] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const [adminToken, setAdminToken] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -35,6 +36,7 @@ const AdminPanel = () => {
   };
 
   const fetchCoupons = async (token) => {
+    setLoading2(true);
     try {
       const response = await fetch(`${API_BASE_URL}/api/admin/coupons`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -45,11 +47,15 @@ const AdminPanel = () => {
     } catch (err) {
       setError("Failed to load coupons.");
     }
+    finally 
+    {
+        setLoading2(false);
+    }
   };
 
   const deleteCoupon = async (id) => {
     try {
-      setLoading(true);
+      setLoading2(true);
       const response = await fetch(
         `${API_BASE_URL}/api/admin/coupon/delete/${id}`,
         {
@@ -72,13 +78,13 @@ const AdminPanel = () => {
     } catch (err) {
       setError("Failed to delete coupon.");
     } finally {
-      setLoading(false);
+      setLoading2(false);
     }
   };
 
   const fetchClaimHistory = async (token) => {
     try {
-      setLoading(true);
+      setLoading2(true);
       const response = await fetch(`${API_BASE_URL}/api/admin/claims`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -92,13 +98,14 @@ const AdminPanel = () => {
       setError("Failed to load claim history. Please try again later.");
       console.error("Error fetching claim history:", err);
     } finally {
-      setLoading(false);
+      setLoading2(false);
     }
   };
 
   const modifyCoupon = async () => {
     try {
-      setLoading(true);
+      setLoading1(true);
+      setLoading2(true);
       const response = await fetch(
         `${API_BASE_URL}/api/admin/coupon/update/${couponId}`,
         {
@@ -125,7 +132,8 @@ const AdminPanel = () => {
       setModify(false);
       setNewCoupon("");
       setCouponID("");
-      setLoading(false);
+      setLoading1(false);
+      setLoading2(false);
     }
   };
 
@@ -136,7 +144,7 @@ const AdminPanel = () => {
     }
 
     try {
-      setLoading(true);
+      setLoading1(true);
       setError("");
       const response = await fetch(`${API_BASE_URL}/api/admin/coupon`, {
         method: "POST",
@@ -158,13 +166,13 @@ const AdminPanel = () => {
     } catch (err) {
       setError("Error adding coupon.");
     } finally {
-      setLoading(false);
+      setLoading1(false);
     }
   };
 
   const toggleCoupon = async (id, isActive) => {
     try {
-      setLoading(true);
+      setLoading2(true);
       const response = await fetch(
         `${API_BASE_URL}/api/admin/coupon/toggle/${id}`,
         {
@@ -193,7 +201,7 @@ const AdminPanel = () => {
     } catch (err) {
       setError("Failed to update coupon.");
     } finally {
-      setLoading(false);
+      setLoading2(false);
     }
   };
 
@@ -285,11 +293,11 @@ const AdminPanel = () => {
             />
             <button
               onClick={isModify ? modifyCoupon : addCoupon}
-              disabled={loading}
-              style={{ cursor: `${loading ? "not-allowed" : "pointer"}` }}
+              disabled={loading1}
+              style={{ cursor: `${loading1 ? "not-allowed" : "pointer"}` }}
               className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? (
+              {loading1 ? (
                 <span className="flex items-center justify-center">
                   <svg
                     className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
@@ -330,7 +338,7 @@ const AdminPanel = () => {
               style={{ cursor: "pointer" }}
               onClick={() => fetchCoupons(adminToken)}
               className="text-indigo-600 hover:text-indigo-800 flex items-center text-sm"
-              disabled={loading}
+              disabled={loading2}
             >
               <svg
                 className="w-4 h-4 mr-1"
@@ -350,7 +358,7 @@ const AdminPanel = () => {
             </button>
           </div>
 
-          {loading && coupons.length === 0 ? (
+          {loading2 && coupons.length === 0 ? (
             <div className="flex justify-center items-center py-12">
               <svg
                 className="animate-spin h-8 w-8 text-indigo-600"
@@ -491,7 +499,7 @@ const AdminPanel = () => {
                               setCouponID(coupon._id);
                           }}
                           disabled={
-                            (coupon.is_claimed ? true : false) || loading
+                            (coupon.is_claimed ? true : false) || loading2
                           }
                           style={{
                             cursor: coupon.is_claimed
@@ -518,7 +526,7 @@ const AdminPanel = () => {
                             toggleCoupon(coupon._id, coupon.is_active)
                           }
                           disabled={
-                            (coupon.is_claimed ? true : false) || loading
+                            (coupon.is_claimed ? true : false) || loading2
                           }
                           style={{
                             cursor: coupon.is_claimed
@@ -538,7 +546,7 @@ const AdminPanel = () => {
                         <button
                           className={`px-3 py-1 rounded-md text-red-900 border border-red-900 transition duration-150 disabled:opacity-50`}
                           onClick={() => deleteCoupon(coupon._id)}
-                          disabled={loading}
+                          disabled={loading2}
                           style={{ cursor: "pointer" }}
                         >
                           Delete
