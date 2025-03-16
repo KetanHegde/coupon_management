@@ -476,6 +476,9 @@ const AdminPanel = () => {
                             <span className="text-black text-xs">
                               Claimed By IP : {coupon.claimed_by.ip_address}
                             </span>
+                              <span className="text-black text-xs">
+                              Claimed in browser session : {coupon.claimed_by.browser_id}
+                            </span>
                             <span className="text-black text-xs">
                               Claimed on :
                               {new Date(
@@ -644,6 +647,7 @@ const AdminPanel = () => {
               No claim records available.
             </p>
           ) : (
+            <div className"overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -693,6 +697,7 @@ const AdminPanel = () => {
                 ))}
               </tbody>
             </table>
+                  </div>
           )}
         </div>
       </div>
